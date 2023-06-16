@@ -49,15 +49,14 @@ class Dojo:
     @classmethod
     def get_dojo_with_ninjas(cls, data):
         query = """
-        SELECT *
-        FROM dojos
-        JOIN ninjas ON dojos.id = dojos.ninja_id
+        SELECT * FROM dojos
+        JOIN ninjas ON dojos.id = ninjas.dojo_id
         WHERE dojos.id = %(id)s;
         """
 
         results = connectToMySQL(cls.DB).query_db(query, data)
 
-        dojo = cls(results[0])
+        one_dojo = cls(results[0])
         
         for row in results:
             ninja_data = {
@@ -67,8 +66,9 @@ class Dojo:
                 "age":  row['age'],
                 "created_at":  row['ninjas.created_at'],
                 "updated_at":  row['ninjas.updated_at'],
+                "dojo_id": row['dojo_id']
             }
-            dojo.ninjas.append(ninjas_model.Ninja(ninja_data))
-            print(dojo)
-        return dojo
+            one_dojo.ninjas.append(ninjas_model.Ninja(ninja_data))
+            print(one_dojo)
+        return one_dojo
     

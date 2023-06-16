@@ -23,8 +23,8 @@ def add_dojo():
 
 @app.route('/dojos/<int:dojos_id>')
 def show(dojos_id):
-    dojo = Dojo.get_dojo_with_ninjas({"id": dojos_id})
-    for ninja in dojo.ninjas:
-        print(ninja.name)
-    return render_template('dojo_show.html', dojo=dojo)
+    dojo_of_ninjas = Dojo.get_dojo_with_ninjas({"id": dojos_id})
+    # for ninja in ninjas:
+    #     print(ninja.name)
+    return render_template('dojo_show.html', dojo_of_ninjas = dojo_of_ninjas)
 
